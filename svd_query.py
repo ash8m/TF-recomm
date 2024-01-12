@@ -80,13 +80,16 @@ if __name__ == '__main__':
                        smovies=sorted (moviesrecomm,key=lambda x:x[1],reverse=True)
                        topmovies= smovies[0:10]
                        print (topmovies)
+                       buff=""
                        for item in topmovies:
                            itopmovie=item[0]
                            recommendedmovie=moviefile["title"][itopmovie]
                            recommendedtags=moviefile["tags"][itopmovie]
                            #print >>sys.stderr, 'sending data back to the client'
-                           connection.sendall(recommendedmovie+":"+recommendedtags+"\n")
+                           buff += recommendedmovie+":"+recommendedtags+"\n"
                            #print >>sys.stderr, 'Sent data'
+                       print(buff)
+                       connection.sendall(buff)
                    else:
                        print >>sys.stderr, 'no more data from', client_address
                        break
